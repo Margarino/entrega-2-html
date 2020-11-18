@@ -1,0 +1,80 @@
+{% extends 'layout-clientes.html' %}
+
+{% block body %}
+
+<div class="row">
+
+        <!--Formulario-->
+        <div class="col-md-5">
+            <!--Formulario de entrada de datos-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <p>{{message}}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <form action="/agregar_cliente" method="POST" id="frmPerson" class="form-horizontal">
+                <div class="form-group">
+                    <input type="text" name="Nombre" id="txtName" class="form-control" placeholder="Nombre">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="Rut" id="txtID" class="form-control" placeholder="Rut sin puntos ni guion">
+                </div>            
+
+                <div class="form-group">
+                    <input type="text" name="Edad" id="txtEdad" class="form-control" placeholder="Edad">
+                </div>
+                    <input type="text" name="Direccion" id="txtDireccion" class="form-control" placeholder="Direccion">
+                <div class="form-group"></div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                </div>
+            </form>  
+        </div>
+    </div>
+
+    
+<!--Tabla con la lista de datos-->
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Rut</td>
+                    <td>Edad</td>
+                    <td>Direccion</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+    
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.0 }}</td>
+                    <td>{{ cliente.1 }}</td>
+                    <td>{{ cliente.2 }}</td>
+                    <td>{{ cliente.3 }}</td>
+                <td>
+                    <a href="/edit_cliente/{{cliente.1}}" class="btn btn-secondary">Editar</a>
+                    <a href="/delete_cliente/{{cliente.1}}" class="btn btn-danger">Eliminar</a>
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
